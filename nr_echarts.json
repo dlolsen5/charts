@@ -1,0 +1,536 @@
+[
+    {
+        "id": "fb9e4a990905e6f5",
+        "type": "inject",
+        "z": "c96f40780c693c87",
+        "name": "Inject Interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "3425faee9cc454fa",
+                "82ad9d88da249692",
+                "4722906186d031eb"
+            ]
+        ]
+    },
+    {
+        "id": "3425faee9cc454fa",
+        "type": "function",
+        "z": "c96f40780c693c87",
+        "name": "Mock data",
+        "func": "let direct = []; // Math.round(Math.random() * 1000);\nlet mail_ad = []; // Math.round(Math.random() * 1000);\nlet affiliate_ad = []; // Math.round(Math.random() * 1000);\nlet video_ad = []; //Math.round(Math.random() * 1000);\nlet search_engine = []; // Math.round(Math.random() * 1000);\n\nfor(let i=0; i<7; i++){\n    direct.push(Math.round(Math.random() * 1000));\n    mail_ad.push(Math.round(Math.random() * 1000));\n    affiliate_ad.push(Math.round(Math.random() * 1000));\n    video_ad.push(Math.round(Math.random() * 1000));\n    search_engine.push(Math.round(Math.random() * 1000));\n\n}\n\nmsg.payload={\n    'Direct':direct,\n    'Mail Ad':mail_ad,\n    'Affiliate Ad':affiliate_ad,\n    'Video Ad':video_ad,\n    'Search Engine':search_engine\n    }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "19955f59601f3051",
+                "d28081a31945eb5f",
+                "c1d974136e7b73b5",
+                "57ae6f2c5fb646c7",
+                "f102a88509689dd6",
+                "dcbff2f48baa5f50",
+                "c357bc270551b725",
+                "f237deeb1e217992",
+                "c8416083f59f9b20",
+                "0edd187aaed78c93"
+            ]
+        ]
+    },
+    {
+        "id": "19955f59601f3051",
+        "type": "debug",
+        "z": "c96f40780c693c87",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 220,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d28081a31945eb5f",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart2 Dynamic",
+        "order": 3,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart2\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart2 = document.getElementById('chart2');\n    var myChart = echarts.init(chart2);\n    myChart.setOption({\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n       /* myChart.resize({\n        width: 400,\n        height: 200\n        }); */\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 650,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0413790f7c668dcc",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart Dynamic",
+        "order": 1,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    \n    <div id=\"chart\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart = document.getElementById('chart');\n    var myChart = echarts.init(chart);\n    myChart.setOption({\n   \n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n      /*  myChart.resize({\n        width: 400,\n        height: 200\n        }); */\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 440,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0b99e2412a77e83b",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "chart3 - tangential",
+        "order": 6,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart3\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart3 = document.getElementById('chart3');\n    var myChart = echarts.init(chart3);\n    window.addEventListener('resize', function() {\n    myChart.resize();\n    });\n    myChart.setOption({\n    legend: {\n    show: true\n    \n    },\n    polar: {\n    radius: [30, '80%']\n    },\n    angleAxis: {\n    max: 4,\n    startAngle: 75\n    },\n    radiusAxis: {\n    type: 'category',\n    data: ['a', 'b', 'c', 'd']\n    },\n    tooltip: {},\n    series: {\n    type: 'bar',\n    data: [2, 1.2, 2.4, 3.6],\n    coordinateSystem: 'polar',\n    label: {\n    show: true,\n    position: 'middle',\n    formatter: '{b}: {c}'\n    }\n    }\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        myChart.setOption({\n            \n        legend:{show: true},\n        polar: {\n        radius: [30, '80%']\n        },\n        angleAxis: {\n        max: 4,\n        startAngle: 75\n        },\n        radiusAxis: {\n        type: 'category',\n        data: ['a', 'b', 'c', 'd']\n        },\n        tooltip: {},\n        series: {\n        type: 'bar',\n        //data: [2, 1.2, 2.4, 3.6],\n        data: [myData.payload.a, myData.payload.b, myData.payload.c, myData.payload.d],\n        coordinateSystem: 'polar',\n        label: {\n        show: true,\n        position: 'middle',\n        formatter: '{b}: {c}'\n        }\n        }\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 670,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "82ad9d88da249692",
+        "type": "function",
+        "z": "c96f40780c693c87",
+        "name": "function 1",
+        "func": "let a = (Math.random() * 4);\nlet b = (Math.random() * 4);\nlet c = (Math.random() * 4);\nlet d = (Math.random() * 4);\n\n\n\nmsg.payload = {\n    'a': a.toFixed(1),\n    'b': b.toFixed(1),\n    'c': c.toFixed(1),\n    'd': d.toFixed(1)\n    \n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 260,
+        "wires": [
+            [
+                "e7eb55c758c8a173",
+                "0b99e2412a77e83b"
+            ]
+        ]
+    },
+    {
+        "id": "e7eb55c758c8a173",
+        "type": "debug",
+        "z": "c96f40780c693c87",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "57ae6f2c5fb646c7",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart Dynamic",
+        "order": 11,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    \n    <div id=\"chart6\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart6 = document.getElementById('chart6');\n    var myChart = echarts.init(chart6);\n    myChart.setOption({\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 720,
+        "y": 104,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c1d974136e7b73b5",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart Dynamic",
+        "order": 12,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    \n    <div id=\"chart5\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart5 = document.getElementById('chart5');\n    var myChart = echarts.init(chart5);\n    myChart.setOption({\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 760,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6d580ea8eec9c0e",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart Dynamic",
+        "order": 13,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    \n    <div id=\"chart4\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart4 = document.getElementById('chart4');\n    var myChart = echarts.init(chart4);\n    myChart.setOption({\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 740,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f102a88509689dd6",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "echart Dynamic",
+        "order": 14,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    \n    <div id=\"chart7\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart7 = document.getElementById('chart7');\n    var myChart = echarts.init(chart7);\n    myChart.setOption({\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    // Use axis to trigger tooltip\n    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n    }\n    },\n    legend: {},\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: {\n    type: 'value'\n    },\n    yAxis: {\n    type: 'category',\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    series: [\n    {\n    name: 'Direct',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 302, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Video Ad',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 212, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Search Engine',\n    type: 'bar',\n    stack: 'total',\n    label: {\n    show: true\n    },\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 832, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        myChart.setOption({\n            \n            tooltip: {},\n        /*tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        // Use axis to trigger tooltip\n        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'\n        }\n        },*/\n        legend: {},\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: {\n        type: 'value'\n        },\n        yAxis: {\n        type: 'category',\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        series: [\n        {\n        name: 'Direct',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'bar',\n        stack: 'total',\n        label: {\n        show: true\n        },\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ] \n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 738,
+        "y": 150,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dcbff2f48baa5f50",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "stacked chart",
+        "order": 2,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart8\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart8 = document.getElementById('chart8');\n    var myChart = echarts.init(chart8);\n    myChart.setOption({\n    title: {\n    //text: 'Stacked Area Chart'\n    },\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    type: 'cross',\n    label: {\n    backgroundColor: '#6a7985'\n    }\n    }\n    },\n    legend: {\n    data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n    },\n    toolbox: {\n    feature: {\n    saveAsImage: {}\n    }\n    },\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: [\n    {\n    type: 'category',\n    boundaryGap: false,\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    }\n    ],\n    yAxis: [\n    {\n    type: 'value'\n    }\n    ],\n    series: [\n    {\n    name: 'Direct',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 232, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Video Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 332, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Search Engine',\n    type: 'line',\n    stack: 'Total',\n    label: {\n    show: true,\n    position: 'top'\n    },\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 932, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n     \n        myChart.setOption({\n            \n        title: {\n        //text: 'Stacked Area Chart'\n        },\n        tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        type: 'cross',\n        label: {\n        backgroundColor: '#6a7985'\n        }\n        }\n        },\n        legend: {\n        data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n        },\n        toolbox: {\n        feature: {\n        saveAsImage: {}\n        }\n        },\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: [\n        {\n        type: 'category',\n        boundaryGap: false,\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        }\n        ],\n        yAxis: [\n        {\n        type: 'value'\n        }\n        ],\n        series: [\n        {\n        name: 'Direct',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'line',\n        stack: 'Total',\n        label: {\n        show: true,\n        position: 'top'\n        },\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 630,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c357bc270551b725",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "stacked chart",
+        "order": 7,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart9\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart9 = document.getElementById('chart9');\n    var myChart = echarts.init(chart9);\n    myChart.setOption({\n    title: {\n    //text: 'Stacked Area Chart'\n    },\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    type: 'cross',\n    label: {\n    backgroundColor: '#6a7985'\n    }\n    }\n    },\n    legend: {\n    data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n    },\n    toolbox: {\n    feature: {\n    saveAsImage: {}\n    }\n    },\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: [\n    {\n    type: 'category',\n    boundaryGap: false,\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    }\n    ],\n    yAxis: [\n    {\n    type: 'value'\n    }\n    ],\n    series: [\n    {\n    name: 'Direct',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 232, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Video Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 332, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Search Engine',\n    type: 'line',\n    stack: 'Total',\n    label: {\n    show: true,\n    position: 'top'\n    },\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 932, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n     \n        myChart.setOption({\n            \n        title: {\n        //text: 'Stacked Area Chart'\n        },\n        tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        type: 'cross',\n        label: {\n        backgroundColor: '#6a7985'\n        }\n        }\n        },\n        legend: {\n        data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n        },\n        toolbox: {\n        feature: {\n        saveAsImage: {}\n        }\n        },\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: [\n        {\n        type: 'category',\n        boundaryGap: false,\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        }\n        ],\n        yAxis: [\n        {\n        type: 'value'\n        }\n        ],\n        series: [\n        {\n        name: 'Direct',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'line',\n        stack: 'Total',\n        label: {\n        show: true,\n        position: 'top'\n        },\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 850,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f237deeb1e217992",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "stacked chart",
+        "order": 8,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart10\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart10 = document.getElementById('chart10');\n    var myChart = echarts.init(chart10);\n    myChart.setOption({\n    title: {\n    //text: 'Stacked Area Chart'\n    },\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    type: 'cross',\n    label: {\n    backgroundColor: '#6a7985'\n    }\n    }\n    },\n    legend: {\n    data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n    },\n    toolbox: {\n    feature: {\n    saveAsImage: {}\n    }\n    },\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: [\n    {\n    type: 'category',\n    boundaryGap: false,\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    }\n    ],\n    yAxis: [\n    {\n    type: 'value'\n    }\n    ],\n    series: [\n    {\n    name: 'Direct',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 232, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Video Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 332, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Search Engine',\n    type: 'line',\n    stack: 'Total',\n    label: {\n    show: true,\n    position: 'top'\n    },\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 932, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n     \n        myChart.setOption({\n            \n        title: {\n        //text: 'Stacked Area Chart'\n        },\n        tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        type: 'cross',\n        label: {\n        backgroundColor: '#6a7985'\n        }\n        }\n        },\n        legend: {\n        data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n        },\n        toolbox: {\n        feature: {\n        saveAsImage: {}\n        }\n        },\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: [\n        {\n        type: 'category',\n        boundaryGap: false,\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        }\n        ],\n        yAxis: [\n        {\n        type: 'value'\n        }\n        ],\n        series: [\n        {\n        name: 'Direct',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'line',\n        stack: 'Total',\n        label: {\n        show: true,\n        position: 'top'\n        },\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 910,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c8416083f59f9b20",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "stacked chart",
+        "order": 9,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart11\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart11 = document.getElementById('chart11');\n    var myChart = echarts.init(chart11);\n    myChart.setOption({\n    title: {\n    //text: 'Stacked Area Chart'\n    },\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    type: 'cross',\n    label: {\n    backgroundColor: '#6a7985'\n    }\n    }\n    },\n    legend: {\n    data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n    },\n    toolbox: {\n    feature: {\n    saveAsImage: {}\n    }\n    },\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: [\n    {\n    type: 'category',\n    boundaryGap: false,\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    }\n    ],\n    yAxis: [\n    {\n    type: 'value'\n    }\n    ],\n    series: [\n    {\n    name: 'Direct',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 232, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Video Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 332, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Search Engine',\n    type: 'line',\n    stack: 'Total',\n    label: {\n    show: true,\n    position: 'top'\n    },\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 932, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n     \n        myChart.setOption({\n            \n        title: {\n        //text: 'Stacked Area Chart'\n        },\n        tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        type: 'cross',\n        label: {\n        backgroundColor: '#6a7985'\n        }\n        }\n        },\n        legend: {\n        data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n        },\n        toolbox: {\n        feature: {\n        saveAsImage: {}\n        }\n        },\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: [\n        {\n        type: 'category',\n        boundaryGap: false,\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        }\n        ],\n        yAxis: [\n        {\n        type: 'value'\n        }\n        ],\n        series: [\n        {\n        name: 'Direct',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'line',\n        stack: 'Total',\n        label: {\n        show: true,\n        position: 'top'\n        },\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 950,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0edd187aaed78c93",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "stacked chart",
+        "order": 10,
+        "width": "10",
+        "height": "4",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0;\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart12\" style=\"width: 400px; height: 200px;\"></div>\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart12 = document.getElementById('chart12');\n    var myChart = echarts.init(chart12);\n    myChart.setOption({\n    title: {\n    //text: 'Stacked Area Chart'\n    },\n    tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n    type: 'cross',\n    label: {\n    backgroundColor: '#6a7985'\n    }\n    }\n    },\n    legend: {\n    data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n    },\n    toolbox: {\n    feature: {\n    saveAsImage: {}\n    }\n    },\n    grid: {\n    left: '3%',\n    right: '4%',\n    bottom: '3%',\n    containLabel: true\n    },\n    xAxis: [\n    {\n    type: 'category',\n    boundaryGap: false,\n    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    }\n    ],\n    yAxis: [\n    {\n    type: 'value'\n    }\n    ],\n    series: [\n    {\n    name: 'Direct',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [120, 132, 101, 134, 90, 230, 210]\n    },\n    {\n    name: 'Mail Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [220, 182, 191, 234, 290, 330, 310]\n    },\n    {\n    name: 'Affiliate Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [150, 232, 201, 154, 190, 330, 410]\n    },\n    {\n    name: 'Video Ad',\n    type: 'line',\n    stack: 'Total',\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [320, 332, 301, 334, 390, 330, 320]\n    },\n    {\n    name: 'Search Engine',\n    type: 'line',\n    stack: 'Total',\n    label: {\n    show: true,\n    position: 'top'\n    },\n    areaStyle: {},\n    emphasis: {\n    focus: 'series'\n    },\n    data: [820, 932, 901, 934, 1290, 1330, 1320]\n    }\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n     \n        myChart.setOption({\n            \n        title: {\n        //text: 'Stacked Area Chart'\n        },\n        tooltip: {\n        trigger: 'axis',\n        axisPointer: {\n        type: 'cross',\n        label: {\n        backgroundColor: '#6a7985'\n        }\n        }\n        },\n        legend: {\n        data: ['Direct', 'Mail Ad', 'Affiliate Ad', 'Video Ad', 'Search Engine']\n        },\n        toolbox: {\n        feature: {\n        saveAsImage: {}\n        }\n        },\n        grid: {\n        left: '3%',\n        right: '4%',\n        bottom: '3%',\n        containLabel: true\n        },\n        xAxis: [\n        {\n        type: 'category',\n        boundaryGap: false,\n        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        }\n        ],\n        yAxis: [\n        {\n        type: 'value'\n        }\n        ],\n        series: [\n        {\n        name: 'Direct',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload.Direct\n        },\n        {\n        name: 'Mail Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Mail Ad\"]\n        },\n        {\n        name: 'Affiliate Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Affiliate Ad\"]\n        },\n        {\n        name: 'Video Ad',\n        type: 'line',\n        stack: 'Total',\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Video Ad\"]\n        },\n        {\n        name: 'Search Engine',\n        type: 'line',\n        stack: 'Total',\n        label: {\n        show: true,\n        position: 'top'\n        },\n        areaStyle: {},\n        emphasis: {\n        focus: 'series'\n        },\n        data: myData.payload[\"Search Engine\"]\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 970,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4722906186d031eb",
+        "type": "function",
+        "z": "c96f40780c693c87",
+        "name": "function 2",
+        "func": "// This example requires ECharts v5.4.0 or later\n//const cellSize = [80, 80];\nconst pieRadius = 30;\nfunction getVirtualData() {\n    const date = +echarts.time.parse('2017-02-01');\n    const end = +echarts.time.parse('2017-03-01');\n    const dayTime = 3600 * 24 * 1000;\n    const data = [];\n    for (let time = date; time < end; time += dayTime) {\n        data.push([\n            echarts.time.format(time, '{yyyy}-{MM}-{dd}', false),\n            Math.floor(Math.random() * 10000)\n        ]);\n    }\n    return data;\n}\nconst scatterData = getVirtualData();\nconst pieSeries = scatterData.map(function (item, index) {\n    return {\n        type: 'pie',\n        id: 'pie-' + index,\n        center: item[0],\n        radius: pieRadius,\n        coordinateSystem: 'calendar',\n        label: {\n            formatter: '{c}',\n            position: 'inside'\n        },\n        data: [\n            { name: 'Work', value: Math.round(Math.random() * 24) },\n            { name: 'Entertainment', value: Math.round(Math.random() * 24) },\n            { name: 'Sleep', value: Math.round(Math.random() * 24) }\n        ]\n    };\n});\nmsg.payload = {scatterData, pieSeries};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "echarts",
+                "module": "echarts"
+            }
+        ],
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "a64bdd2450b79ff0",
+                "cbb374fb2b753d0d"
+            ]
+        ]
+    },
+    {
+        "id": "a64bdd2450b79ff0",
+        "type": "debug",
+        "z": "c96f40780c693c87",
+        "name": "debug 14",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "cbb374fb2b753d0d",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "d": true,
+        "group": "d6558c1e75d1a1ae",
+        "name": "pie calendar",
+        "order": 15,
+        "width": "10",
+        "height": "8",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n    <!-- <div id=\"container\" style=\"height: 100%\"></div> -->\n    <div id=\"chart19\" style=\"width: 400px; height: 400px;\"></div>\n    <!--My message: {{msg.payload.pieSeries}} -->\n\n\n   <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n \n\n\n<script>\n(function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n    const cellSize = [80, 80];\n    var myData;\n    myData = msg;\n    //const scatterData = msg.payload.scatterData;\n    //const pieSeries = msg.payload.pieSeries;\n    \n    var chart19 = document.getElementById('chart19');\n    var myChart = echarts.init(chart19);\n    myChart.setOption({\n    tooltip: {},\n    legend: {\n    data: ['Work', 'Entertainment', 'Sleep'],\n    bottom: 20\n    },\n    calendar: {\n    top: 'middle',\n    left: 'center',\n    orient: 'vertical',\n    cellSize: cellSize,\n    yearLabel: {\n    show: false,\n    fontSize: 30\n    },\n    dayLabel: {\n    margin: 20,\n    firstDay: 1,\n    nameMap: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n    },\n    monthLabel: {\n    show: false\n    },\n    range: ['2017-02']\n    },\n    series: [\n    {\n    id: 'label',\n    type: 'scatter',\n    coordinateSystem: 'calendar',\n    symbolSize: 0,\n    label: {\n    show: true,\n    formatter: function (params) {\n    return echarts.time.format(params.value[0], '{dd}', false);\n    },\n    offset: [-cellSize[0] / 2 + 10, -cellSize[1] / 2 + 10],\n    fontSize: 14\n    },\n    data: myData.payload.scatterData\n    },\n    ...myData.payload.pieSeries\n    ]\n    });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n       // scatterData = msg.payload.scatterData;\n       // pieSeries = msg.payload.pieSeries;\n\n        \n     \n        myChart.setOption({\n            \n        tooltip: {},\n        legend: {\n        data: ['Work', 'Entertainment', 'Sleep'],\n        bottom: 20\n        },\n        calendar: {\n        top: 'middle',\n        left: 'center',\n        orient: 'vertical',\n        cellSize: cellSize,\n        yearLabel: {\n        show: false,\n        fontSize: 30\n        },\n        dayLabel: {\n        margin: 20,\n        firstDay: 1,\n        nameMap: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']\n        },\n        monthLabel: {\n        show: false\n        },\n        range: ['2017-02']\n        },\n        series: [\n        {\n        id: 'label',\n        type: 'scatter',\n        coordinateSystem: 'calendar',\n        symbolSize: 0,\n        label: {\n        show: true,\n        formatter: function (params) {\n        return echarts.time.format(params.value[0], '{dd}', false);\n        },\n        offset: [-cellSize[0] / 2 + 10, -cellSize[1] / 2 + 10],\n        fontSize: 14\n        },\n        data: myData.payload.scatterData //scatterData\n        },\n        ...myData.payload.pieSeries //pieSeries\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n</script>\n</body>\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 650,
+        "y": 380,
+        "wires": [
+            [
+                "5cb4da9ffed28377"
+            ]
+        ]
+    },
+    {
+        "id": "f9f139b9f5ef1990",
+        "type": "function",
+        "z": "c96f40780c693c87",
+        "name": "Mock data",
+        "func": "let direct = []; // Math.round(Math.random() * 1000);\nlet mail_ad = []; // Math.round(Math.random() * 1000);\nlet affiliate_ad = []; // Math.round(Math.random() * 1000);\nlet video_ad = []; //Math.round(Math.random() * 1000);\nlet search_engine = []; // Math.round(Math.random() * 1000);\n\nfor(let i=0; i<7; i++){\n    direct.push(Math.round(Math.random() * 1000));\n    mail_ad.push(Math.round(Math.random() * 1000));\n    affiliate_ad.push(Math.round(Math.random() * 1000));\n    video_ad.push(Math.round(Math.random() * 1000));\n    search_engine.push(Math.round(Math.random() * 1000));\n\n}\n\nmsg.payload={\n    'Direct':direct,\n    'Mail Ad':mail_ad,\n    'Affiliate Ad':affiliate_ad,\n    'Video Ad':video_ad,\n    'Search Engine':search_engine\n    }\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 80,
+        "wires": [
+            [
+                "d6d580ea8eec9c0e",
+                "0413790f7c668dcc"
+            ]
+        ]
+    },
+    {
+        "id": "465e1952217cc094",
+        "type": "inject",
+        "z": "c96f40780c693c87",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "f9f139b9f5ef1990"
+            ]
+        ]
+    },
+    {
+        "id": "5cb4da9ffed28377",
+        "type": "debug",
+        "z": "c96f40780c693c87",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c1bedab798a34208",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "Mixed chart",
+        "order": 5,
+        "width": "12",
+        "height": "8",
+        "format": "<!DOCTYPE html>\n<html lang=\"en\" style=\"height: 100%\">\n\n<head>\n    <meta charset=\"utf-8\">\n</head>\n\n<body style=\"height: 100%; margin: 0\">\n\n    <div id=\"chart20\" style=\"width: 500px; height: 500px;\"></div>\n\n\n    <script type=\"text/javascript\" src=\"https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js\"></script>\n\n\n\n\n    <script>\n        (function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n    var chart20 = document.getElementById('chart20');\n    var myChart = echarts.init(chart20);\n    myChart.setOption({\n    legend: {},\n    tooltip: {\n    trigger: 'axis',\n    showContent: false\n    },\n    dataset: {\n    source: [\n    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],\n    ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],\n    ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],\n    ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],\n    ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]\n    ]\n    },\n    xAxis: { type: 'category' },\n    yAxis: { gridIndex: 0 },\n    grid: { top: '55%' },\n    series: [\n    {\n    type: 'line',\n    smooth: true,\n    seriesLayoutBy: 'row',\n    emphasis: { focus: 'series' }\n    },\n    {\n    type: 'line',\n    smooth: true,\n    seriesLayoutBy: 'row',\n    emphasis: { focus: 'series' }\n    },\n    {\n    type: 'line',\n    smooth: true,\n    seriesLayoutBy: 'row',\n    emphasis: { focus: 'series' }\n    },\n    {\n    type: 'line',\n    smooth: true,\n    seriesLayoutBy: 'row',\n    emphasis: { focus: 'series' }\n    },\n    {\n    type: 'pie',\n    id: 'pie',\n    radius: '30%',\n    center: ['50%', '25%'],\n    emphasis: {\n    focus: 'self'\n    },\n    label: {\n    formatter: '{b}: {@2012} ({d}%)'\n    },\n    encode: {\n    itemName: 'product',\n    value: '2012',\n    tooltip: '2012'\n    }\n    }\n    ]\n    });\n\n    myChart.on('updateAxisPointer', function (event) {\n    const xAxisInfo = event.axesInfo[0];\n    if (xAxisInfo) {\n    const dimension = xAxisInfo.value + 1;\n    myChart.setOption({\n    series: {\n    id: 'pie',\n    label: {\n    formatter: '{b}: {@[' + dimension + ']} ({d}%)'\n    },\n    encode: {\n    value: dimension,\n    tooltip: dimension\n    }\n    }\n    });\n    }\n    });\n\n \n   scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n        \n        myChart.setOption({\n        legend: {},\n        tooltip: {\n        trigger: 'axis',\n        showContent: false\n        },\n        dataset: {\n        source: [\n        ['product', '2012', '2013', '2014', '2015', '2016', '2017'],\n        ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],\n        ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],\n        ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],\n        ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1]\n        ]\n        },\n        xAxis: { type: 'category' },\n        yAxis: { gridIndex: 0 },\n        grid: { top: '55%' },\n        series: [\n        {\n        type: 'line',\n        smooth: true,\n        seriesLayoutBy: 'row',\n        emphasis: { focus: 'series' }\n        },\n        {\n        type: 'line',\n        smooth: true,\n        seriesLayoutBy: 'row',\n        emphasis: { focus: 'series' }\n        },\n        {\n        type: 'line',\n        smooth: true,\n        seriesLayoutBy: 'row',\n        emphasis: { focus: 'series' }\n        },\n        {\n        type: 'line',\n        smooth: true,\n        seriesLayoutBy: 'row',\n        emphasis: { focus: 'series' }\n        },\n        {\n        type: 'pie',\n        id: 'pie',\n        radius: '30%',\n        center: ['50%', '25%'],\n        emphasis: {\n        focus: 'self'\n        },\n        label: {\n        formatter: '{b}: {@2012} ({d}%)'\n        },\n        encode: {\n        itemName: 'product',\n        value: '2012',\n        tooltip: '2012'\n        }\n        }\n        ]\n        });\n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n    \n    </script>\n</body>\n\n</html>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 984,
+        "y": 398,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6558c1e75d1a1ae",
+        "type": "ui_group",
+        "name": "3Dashboard",
+        "tab": "d93dad51cda1b6cd",
+        "order": 1,
+        "disp": true,
+        "width": "34",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d93dad51cda1b6cd",
+        "type": "ui_tab",
+        "name": "3Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
