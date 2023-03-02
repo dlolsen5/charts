@@ -1,0 +1,91 @@
+[
+    {
+        "id": "e1251e73a3199ca6",
+        "type": "ui_template",
+        "z": "c96f40780c693c87",
+        "group": "d6558c1e75d1a1ae",
+        "name": "bubble-image",
+        "order": 4,
+        "width": "12",
+        "height": "10",
+        "format": "<style>\n    .bg_rgba {\n        background-attachment: float;\n        background-repeat: no-repeat;\n        background-size: 530px 341px;\n        width: 600px;\n        height: 452px;\n        background-position: 45px 65px;\n        /*background-color: rgba(242, 84, 89, 1.0);*/\n        background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url(\"https://picsum.photos/600\");\n        \n       \n    }\n</style>\n\n<body style=\"height: 100%; margin: 0\">\n    <div class=bg_rgba style=\"width:600px;\">\n        <canvas id=\"bubble-chart\" width=\"600\" height=\"452\"></canvas>\n    </div>\n\n\n    <script>\n        (function(scope) {\n    var timer = setInterval(function() {\n    if (!window.echarts) return;\n    clearInterval(timer);\n     \n    var myData;\n     \n   // var chart = document.getElementById('chart21');\n    //var myChart = echarts.init(chart);\n    new Chart(document.getElementById(\"bubble-chart\"), {\n     \n    type: 'bubble',\n    data: {\n      labels: \"label\",\n      datasets: [\n        {\n          label: \"LD152\",\n          backgroundColor: \"rgba(255, 255, 0, 1.0)\",\n          borderColor: \"#000\",\n          data: [\n          \t\n          \t{x: 1.9, y: 6.1, r: 10 }\n          ]\n        },\n        {\n        label: \"LD153\",\n        backgroundColor: \"rgba(255, 216, 0, 1.0)\",\n        borderColor: \"#000\",\n        data: [\n        \n        {x: 5.4, y: 6.9, r: 10 }\n        ]\n        },\n        {\n        label: \"SH107\",\n        backgroundColor: \"rgba(255, 102, 102, 1.0)\",\n        borderColor: \"#000\",\n        data: [\n        \n        {x: 2.4, y: 1.1, r: 10 }\n        ]\n        },\n        {\n        label: \"SH110\",\n        backgroundColor: \"rgba(255, 153, 51, 1.0)\",\n        borderColor: \"#000\",\n        data: [\n        \n        {x: 3.1, y: 0.9, r: 10 }\n        ]\n        }, {\n          label: [\"SH111\"], \n          backgroundColor: \"rgba(72, 255, 70,1.0)\",\n          borderColor: \"#000\",\n          data: [\n          \t\n          \t{x: 3.2, y: 1.8, r: 10 }\n\t\t  ]\n        }\n      ]\n    },\n    options: {\n        legend: {\n            display: true,\n            labels: {\n                fontColor: 'rgb(255, 99, 132)'\n            }\n        },\n      title: {\n        display: true,\n        text: 'Hang vs Queue time'\n      }, scales: {\n        yAxes: [{ \n          ticks: { max: 9, min: 0},\n          gridLines: {\n          display: true ,\n          color: \"#FFFFFF\"\n          },\n          scaleLabel: {\n            display: true,\n            labelString: \"Hang time(m)\"\n          }\n        }],\n        xAxes: [{ \n          ticks: { max: 6, min: 0},\n          gridLines: {\n          display: true ,\n          color: \"#FFFFFF\"\n          },\n          scaleLabel: {\n            display: true,\n            labelString: \"Queue time(m)\"\n          }\n        }]\n      }\n    }\n});\n   // });\n\n \n    scope.$watch('msg', function (msg) { //watch for an incoming NR msg\n     if (msg) {\n        myData = msg;\n      /*  myChart.resize({\n        width: 400,\n        height: 200\n        }); */\n      new Chart(document.getElementById(\"bubble-chart\"), {\n      \n    type: 'bubble',\n    data: {\n      labels: \"label\",\n      datasets: myData.payload\n    },\n    options: {\n        legend: {\n            display: true,\n            labels: {\n                fontColor: 'rgb(255, 99, 132)'\n            }\n        },\n      title: {\n        display: true,\n        text: 'Hang vs Queue time'\n      }, scales: {\n        yAxes: [{ \n          ticks: { max: 9, min: 0},\n          gridLines: {\n          display: true ,\n          color: \"#FFFFFF\"\n          },\n          scaleLabel: {\n            display: true,\n            labelString: \"Hang time(m)\"\n          }\n        }],\n        xAxes: [{ \n          ticks: { max: 6, min: 0},\n          gridLines: {\n          display: true ,\n          color: \"#FFFFFF\"\n          },\n          scaleLabel: {\n            display: true,\n            labelString: \"Queue time(m)\"\n          }\n        }]\n      }\n    }\n});\n       \n        \n        };\n        });\n        }, 100);\n        })(scope);\n\n    </script>\n</body>\n\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1320,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50b87b3fc13bf354",
+        "type": "function",
+        "z": "c96f40780c693c87",
+        "name": "bubble data",
+        "func": "let equip = msg.payload;\nlet data = [];\nlet i=0;\nlet n_equip = equip.length;\nlet myobj = {};\n\nfor(i=0;i<n_equip;i++){\n    myobj = {\n        label:equip[i],\n        backgroundColor: \"rgba(\" + Math.floor(Math.random()*255) +\",\"+ Math.floor(Math.random()*255)+\", 0, 1.0)\",\n        borderColor: \"#000\",\n        data: [\n            {x:Math.random()*6, y:Math.random()*9, r:10}\n        ]\n    }\n    data.push(myobj);\n}\n\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 280,
+        "wires": [
+            [
+                "e1251e73a3199ca6"
+            ]
+        ]
+    },
+    {
+        "id": "21bf122ea49e139d",
+        "type": "inject",
+        "z": "c96f40780c693c87",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[\"LD152\",\"LD153\",\"SH107\",\"SH110\",\"SH111\"]",
+        "payloadType": "json",
+        "x": 1210,
+        "y": 220,
+        "wires": [
+            [
+                "50b87b3fc13bf354"
+            ]
+        ]
+    },
+    {
+        "id": "d6558c1e75d1a1ae",
+        "type": "ui_group",
+        "name": "3Dashboard",
+        "tab": "d93dad51cda1b6cd",
+        "order": 1,
+        "disp": true,
+        "width": "34",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d93dad51cda1b6cd",
+        "type": "ui_tab",
+        "name": "3Dashboard",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
